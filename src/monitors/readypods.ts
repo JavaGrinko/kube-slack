@@ -40,7 +40,7 @@ class ReadyPods extends EventEmitter {
             }
             
             if (pod.metadata.name.startsWith('mine-web-ui') && pod.metadata.namespace === 'dev') {
-                console.log(JSON.stringify(pod));
+                console.log(new Date().toString() + " - " + JSON.stringify(pod));
             }
 
 			if (!pod.status || !pod.status.conditions) {
