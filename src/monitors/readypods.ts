@@ -38,10 +38,6 @@ class ReadyPods extends EventEmitter {
 					messageProps.channel = annotations['kube-slack/slack-channel'];
 				}
             }
-            
-            if (pod.metadata.name.startsWith('mine-web-ui') && pod.metadata.namespace === 'dev') {
-                console.log(new Date().toString() + " - " + JSON.stringify(pod));
-            }
 
 			if (!pod.status || !pod.status.conditions) {
 				continue;
@@ -69,9 +65,6 @@ class ReadyPods extends EventEmitter {
             if (!this.alertedMap.has[key]) {
                 this.alertedMap.set(key, new Date(<string>(readyStatus.lastTransitionTime)));
                 this.emit('message', {
-                    fallback: `Pod ${pod.metadata.namespace}/${
-                        pod.metadata.name
-                    } is ready: ${readyStatus.reason} - ${readyStatus.message}`,
                     color: 'good',
                     title: `${pod.metadata.namespace}/${
                         pod.metadata.name
