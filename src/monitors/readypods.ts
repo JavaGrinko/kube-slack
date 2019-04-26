@@ -2,6 +2,7 @@ import { EventEmitter } from "events";
 import * as config from 'config';
 import kube from '../kube';
 import {
+    KubernetesTriStateBoolean,
 	NotifyMessage,
 } from '../types';
 
@@ -55,6 +56,10 @@ class ReadyPods extends EventEmitter {
             }
 
             let readyStatus = readyStatuses[0];
+
+            if (readyStatus.status !== KubernetesTriStateBoolean.true) {
+				continue;
+			}
 
             let key = `${pod.metadata.namespace}/${pod.metadata.name}`;
             if (!this.alertedMap.has[key]) {
