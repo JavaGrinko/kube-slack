@@ -37,7 +37,11 @@ class ReadyPods extends EventEmitter {
 				if (annotations['kube-slack/slack-channel']) {
 					messageProps.channel = annotations['kube-slack/slack-channel'];
 				}
-			}
+            }
+            
+            if (pod.metadata.name === 'mine-web-ui' && pod.metadata.namespace === 'dev') {
+                console.log(JSON.stringify(pod));
+            }
 
 			if (!pod.status || !pod.status.conditions) {
 				continue;
